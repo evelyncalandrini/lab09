@@ -78,11 +78,9 @@ public class BadIOGUI {
             public void actionPerformed(final ActionEvent ignored) {
                 try {
                     final List<String> lines = Files.readAllLines(new File(PATH).toPath(), StandardCharsets.UTF_8);
-                    final StringBuilder content = new StringBuilder();
                     for (final String line : lines) {
-                        content.append(line).append(System.lineSeparator());
+                        System.out.println(line); //NOPMD 
                     }
-                    JOptionPane.showMessageDialog(frame, content.toString(), "File content", JOptionPane.INFORMATION_MESSAGE);
                 } catch (final IOException e) {
                     JOptionPane.showMessageDialog(frame, e, "Error", JOptionPane.ERROR_MESSAGE);
                 }
