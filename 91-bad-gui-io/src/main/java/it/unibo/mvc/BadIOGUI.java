@@ -46,6 +46,12 @@ public class BadIOGUI {
         canvas.add(write, BorderLayout.CENTER);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        final JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(write, BorderLayout.CENTER);
+        canvas.add(panel, BorderLayout.CENTER);
+        final JButton read = new JButton("read from file");
+        panel.add(read);
         /*
          * Handlers
          */
@@ -64,6 +70,21 @@ public class BadIOGUI {
                 } catch (final IOException e) {
                     JOptionPane.showMessageDialog(frame, e, "Error", JOptionPane.ERROR_MESSAGE);
                     e.printStackTrace(); // NOPMD: allowed as this is just an exercise
+                }
+            }
+        });
+        read.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent ignored) {
+                try {
+                    final List<String> lines = Files.readAllLines(new File(PATH).toPath(), StandardCharsets.UTF_8);
+                    final StringBuilder content = new StringBuilder();
+                    for (final String line : lines) {
+                        content.append(line).append(System.lineSeparator());
+                    }
+                    JOptionPane.showMessageDialog(frame, content.toString(), "File content", JOptionPane.INFORMATION_MESSAGE);
+                } catch (final IOException e) {
+                    JOptionPane.showMessageDialog(frame, e, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -91,6 +112,7 @@ public class BadIOGUI {
         /*
          * OK, ready to push the frame onscreen
          */
+        frame.pack();
         frame.setVisible(true);
     }
 
